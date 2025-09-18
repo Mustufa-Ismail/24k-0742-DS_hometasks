@@ -158,7 +158,8 @@ public:
         }
         while (temp != nullptr)
         {
-            cout << "\nName:" << temp->name << endl;
+            cout << "\nID: " << temp->id << endl;
+            cout << "Name: " << temp->name << endl;
             cout << "Price: $" << temp->price << endl;
             temp = temp->next;
         }
@@ -175,11 +176,47 @@ public:
         }
         while (temp != nullptr)
         {
-            cout << "\nName:" << temp->name << endl;
+            cout << "\nID: " << temp->id << endl;
+            cout << "Name: " << temp->name << endl;
             cout << "Price: $" << temp->price << endl;
             temp = temp->prev;
         }
         return;
+    }
+
+    int totalItems()
+    {
+        int count = 0;
+        Node *temp = head;
+        while (temp != nullptr)
+        {
+            temp = temp->next;
+            count++;
+        }
+        return count;
+    }
+
+    void findMostExpensiveItem()
+    { 
+        if (head == nullptr)
+        {
+            cout << "List is empty";
+            return;
+        }
+        Node *temp = head;
+        Node* max = head;
+        while (temp != nullptr)
+        {
+            if (temp->price > max->price)
+            {
+                max = temp;
+            }
+            temp = temp->next;
+        }
+        cout << "Most Expensive item \n";
+        cout << "ID: " << max->id << endl;
+        cout << "Name: " << max->name << endl;
+        cout << "Price: $" << max->price << endl;
     }
 };
 
@@ -209,4 +246,6 @@ int main()
     cout << "\nList from front\n";
     l1.diplayListFromFront();
 
+    cout << l1.totalItems() << " items are in the cart\n";
+    l1.findMostExpensiveItem();
 }
