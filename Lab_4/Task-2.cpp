@@ -3,7 +3,7 @@
 #include <cstdlib>
 using namespace std;
 
-void bubbleSort(int arr[], int size)
+int bubbleSort(int arr[], int size)
 {
     int comparisons = 0;
     for (int i = 0; i < size - 1; i++)
@@ -19,45 +19,60 @@ void bubbleSort(int arr[], int size)
             }
         }
     }
+    return comparisons;
 }
 
-void insertionSort(int arr[], int size)
+int insertionSort(int arr[], int size)
 {
+    int comparisions = 0;
     for (int i = 0; i < size; i++)
     {
         int key = arr[i];
         int j = i - 1;
 
-        while (j >= 0 && arr[j] > key)
+        while (j >= 0)
         {
-            arr[j + 1] = arr[j];
-            j--;
+            comparisions++;
+            if (arr[j] > key)
+            {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            else
+            {
+                break;
+            }
         }
         arr[j + 1] = key;
     }
+    return comparisions;
 }
 
-void selectionSort(int arr[], int size)
+int selectionSort(int arr[], int size)
 {
+    int comparisions = 0;
     for (int i = 0; i < size - 1; i++)
     {
         int min = i;
 
         for (int j = i + 1; j < size; j++)
         {
+            comparisions++;
             if (arr[min] > arr[j])
             {
                 min = j;
             }
         }
         int temp = arr[i];
-        arr[i] = arr[i + 1];
-        arr[i + 1] = temp;
+        arr[i] = arr[min];
+        arr[min] = temp;
     }
+    return comparisions;
 }
 
-void shellSort(int arr[], int size)
+int shellSort(int arr[], int size)
 {
+    int comparisions = 0;
     for (int i = size / 2; i > 0; i /= 2)
     {
         for (int j = i; j < size; j++)
@@ -65,14 +80,23 @@ void shellSort(int arr[], int size)
             int temp = arr[j];
             int res = j;
 
-            while (res >= i && arr[res - i] > temp)
+            while (res >= i)
             {
-                arr[res] = arr[res - i];
-                res -= i;
+                comparisions++;
+                if (arr[res - i] > temp)
+                {
+                    arr[res] = arr[res - i];
+                    res -= i;
+                }
+                else
+                {
+                    break;
+                }
             }
             arr[res] = temp;
         }
     }
+    return comparisions;
 }
 
 void generateArray(int arr[], int size)
@@ -92,8 +116,48 @@ void copyArray(int arr[], int copyarr[], int size)
     }
 }
 
+void display(int arr[], int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
 int main()
 {
-    
+    int arr[20] = {};
+    generateArray(arr, 20);
+    cout << "Unsorted array\n";
+    display(arr, 20);
 
+    int arr1[20] = {};
+    copyArray(arr, arr1, 20);
+
+    cout << "Using Bubble sort\n";
+    int comparisions = bubbleSort(arr1, 20);
+    display(arr1, 20);
+    cout << "Comparisions made: " << comparisions << endl;
+
+    copyArray(arr, arr1, 20);
+
+    cout << "Using insertion sort\n";
+    comparisions = insertionSort(arr1, 20);
+    display(arr1, 20);
+    cout << "Comparisions made: " << comparisions << endl;
+
+    copyArray(arr, arr1, 20);
+
+    cout << "Using selection sort\n";
+    comparisions = selectionSort(arr1, 20);
+    display(arr1, 20);
+    cout << "Comparisions made: " << comparisions << endl;
+
+    copyArray(arr, arr1, 20);
+
+    cout << "Using Shell sort\n";
+    comparisions = shellSort(arr1, 20);
+    display(arr1, 20);
+    cout << "Comparisions made: " << comparisions << endl;
 }
