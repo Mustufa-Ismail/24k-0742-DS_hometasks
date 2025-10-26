@@ -1,0 +1,4 @@
+To handle resturant orders in seqenuce a queue data structure must be used , that will allow orders to be processed in order they came in.
+Operations required would be enqueue to add the orders, dequeue to remove them, isEmpty to find of the queue is empty and isFull to find if the queue is full
+To stop if from overflowing or underflowing we will check is the full when adding new orders, and check if is empty when dequeuing
+Order will be completed and printed in the order they arrived , since Queue works on FIFO, first-in  first- out bases
