@@ -1,16 +1,25 @@
 #include <iostream>
 using namespace std;
 
+class Task
+{
+public:
+    int priority;
+    char name;
+
+    Task() : name(' '), priority(-1) {}
+    Task(char n, int p) : name(n), priority(p) {}
+};
 class maxHeap
 {
 public:
-    int *arr;
+    Task *arr;
     int capacity;
     int size;
 
     maxHeap(int cap) : capacity(cap), size(0)
     {
-        arr = new int[cap];
+        arr = new Task[cap];
     }
 
     int parent(int i) { return (i - 1) / 2; }
@@ -23,11 +32,11 @@ public:
         int left = leftChild(i);
         int right = rightChild(i);
 
-        if (left < size && arr[left]> arr[large])
+        if (left < size && arr[left].priority > arr[large].priority)
         {
             large = left;
         }
-        if (right < size && arr[right] > arr[large])
+        if (right < size && arr[right].priority > arr[large].priority)
         {
             large = right;
         }
@@ -39,7 +48,7 @@ public:
         }
     }
 
-    void insert(int val)
+    void insert(Task val)
     {
         if (size == capacity)
         {
@@ -51,7 +60,7 @@ public:
         size++;
 
         int i = size - 1;
-        while (i != 0 && arr[parent(i)] < arr[i])
+        while (i != 0 && arr[parent(i)].priority < arr[i].priority)
         {
             swap(arr[i], arr[parent(i)]);
             i = parent(i);
@@ -81,7 +90,7 @@ public:
     void print()
     {
         for (int i = 0; i < size; i++)
-            cout << arr[i] << " ";
+            cout << arr[i].name << " " << arr[i].priority << endl;
         cout << endl;
     }
 };
@@ -90,15 +99,15 @@ int main()
 {
     maxHeap h1(100);
 
-    h1.insert(1500);
-    h1.insert(1200);
-    h1.insert(1800);
-    h1.insert(1600);
+    h1.insert(Task('A', 5));
+    h1.insert(Task('B', 3));
+    h1.insert(Task('C', 8));
+
     h1.print();
 
-    h1.insert(1700);
+    h1.insert(Task('D', 6));
     h1.print();
-    
+
     h1.remove();
     h1.print();
 }
